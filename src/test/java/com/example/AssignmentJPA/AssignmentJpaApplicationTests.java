@@ -1,12 +1,13 @@
 package com.example.AssignmentJPA;
 
-import com.example.AssignmentJPA.Repo.AuthorRepo;
-import com.example.AssignmentJPA.Repo.ManyToManyRepo;
-import com.example.AssignmentJPA.Repo.OneToOneRepo;
+import com.example.AssignmentJPA.Repo.*;
 import com.example.AssignmentJPA.entity.Address;
 import com.example.AssignmentJPA.entity.Author;
 import com.example.AssignmentJPA.entity.Book;
 import com.example.AssignmentJPA.entity.Subject;
+import com.example.AssignmentJPA.entity.Uni.AddressUni;
+import com.example.AssignmentJPA.entity.Uni.AuthoreUni;
+import com.example.AssignmentJPA.entity.Uni.BookUni;
 import com.example.AssignmentJPA.entity.manytomany.AuthorMany;
 import com.example.AssignmentJPA.entity.manytomany.BookMany;
 import com.example.AssignmentJPA.entity.onetoone.AuthorOne;
@@ -27,6 +28,10 @@ class AssignmentJpaApplicationTests {
 	ManyToManyRepo manyToManyRepo;
 	@Autowired
 	OneToOneRepo oneToOneRepo;
+	@Autowired
+	Unimapping unimapping;
+	@Autowired
+	UniBookmapping uniBookmapping;
 	@Test
 	void contextLoads() {
 	}
@@ -90,5 +95,21 @@ class AssignmentJpaApplicationTests {
 		authorOne.setName("Aboi");
 		bookOne.setAuthorOne(authorOne);
 		oneToOneRepo.save(bookOne);
+	}
+	@Test
+	void testUniMapping(){
+		AuthoreUni authoreUni = new AuthoreUni();
+		authoreUni.setName("Uniabhi");
+		AddressUni address = new AddressUni();
+		address.setStreetNumber("1212/213");
+		address.setLocation("delhi");
+		address.setState("delhi");
+		authoreUni.setAddress(address);
+
+		BookUni bookUni= new BookUni();
+		bookUni.setName("uni book");
+		bookUni.setAuthor(authoreUni);
+		unimapping.save(authoreUni);
+		uniBookmapping.save(bookUni);
 	}
 }
